@@ -3,11 +3,11 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class CoffeeMaker {
+public class CoffeeMaker implements IAutomationDevice {
 
 	private boolean on;
 
-	public void brew(Type type) {
+	private void brew(Type type) {
 		if (!on) {
 			System.out.println("Turning on CoffeeMaster3000(c)");
 			on = true;
@@ -24,12 +24,12 @@ public class CoffeeMaker {
 			System.out.println("That's it. No more than 3 drips for an espresso.");
 		}
 	}
-
+	@Override
 	public boolean isOn() {
 		return on;
 	}
 
-	public void doClean() {
+	private void doClean() {
 		System.out.println("Running MasterClean3000(c) on CoffeeMaster3000");
 	}
 
@@ -37,7 +37,7 @@ public class CoffeeMaker {
 	 * @deprecated starting from the next Update, Coffee Makers of the CoffeeMaster300x Series will no longer support the
 	 *             shutDown method. Please implement halt(int seconds) instead.
 	 */
-	public void shutDown() {
+	private void shutDown() {
 		if (on) {
 			System.out.println("Shutting down CoffeeMaster3000");
 		}
@@ -45,8 +45,24 @@ public class CoffeeMaker {
 		System.out.println("CoffeeMaster3000 standing by.");
 	}
 
-	public enum Type {
+	private enum Type {
 		DECAF, ESPRESSO, LATTE
+	}
+
+	@Override
+	public void turnOn() {
+		brew(CoffeeMaker.Type.DECAF);
+		
+	}
+
+	@Override
+	public void turnOff() {
+		if(isOn()) {		
+			doClean();
+			shutDown();
+		}
+		
+		
 	}
 
 }

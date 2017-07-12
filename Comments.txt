@@ -1,0 +1,3 @@
+Factory für die Geräte
+set von objekten, die abgearbeitet werden können.
+abstraktion von objekten, und von konfigurationen.
