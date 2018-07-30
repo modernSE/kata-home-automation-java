@@ -1,5 +1,11 @@
 package home.automation;
 
+import home.automation.actions.AirConditionAction;
+import home.automation.actions.CoffeeMakerAction;
+import home.automation.actions.LightsAction;
+import home.automation.actions.ShutterAction;
+import home.automation.actions.StereoAction;
+
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
@@ -9,17 +15,17 @@ public class BigOldMasterSwitch {
 	
 	private boolean isOn = false;
 
-	private Shutter shutter = new Shutter();
+	private ShutterAction shutterAction = new ShutterAction();
 
-	private AirConditioning airConditioning = new AirConditioning();
+	private AirConditionAction airConditioning = new AirConditionAction(20);
 
 	// Direct instances instead injection - dependency inversion principle
 	
-	private Lights lights = new Lights();
+	private LightsAction lightsAction = new LightsAction(50);
 
-	private Stereo stereo = new Stereo();
+	private StereoAction stereoAction = new StereoAction("Bob Marley");
 
-	private CoffeeMaker coffeeMaker = new CoffeeMaker();
+	private CoffeeMakerAction coffeeMakerAction = new CoffeeMakerAction(CoffeeMaker.Type.DECAF);
 
 	// The name does not specify what the button does - triggerServicesOnce
 	public void press() {
@@ -31,11 +37,11 @@ public class BigOldMasterSwitch {
 			
 			// services start here
 			// All values are hard coded and should be injected or at lease settable to the service not the switch
-			shutter.close();
-			airConditioning.setTemperatureInCelsius(20);
-			lights.dimPercent(50);
-			stereo.play("Bob Marley");
-			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
+			shutterAction.turnOff();
+			airConditioning.turnOn();
+			lightsAction.turnOn();
+			stereoAction.turnOn();
+			coffeeMakerAction.turnOn();
 			// services end here
 			
 			isOn = true;
@@ -53,15 +59,10 @@ public class BigOldMasterSwitch {
 			b.append("       |___|\n");
 			System.out.println(b.toString());
 		} else if (isOn) {
-			shutter.open();
+			shutterAction.turnOn();
 			airConditioning.turnOff();
-			lights.off();
-			stereo.rememberPosition();
-			stereo.off();
-			if (coffeeMaker.isOn()) {
-				coffeeMaker.doClean();
-				coffeeMaker.shutDown();
-			}
-		}
+			lightsAction.turnOff();
+			stereoAction.turnOff();
+			coffeeMakerAction.turnOff();		}
 	}
 }
