@@ -1,5 +1,8 @@
-package home.automation;
+package home.automation.switches;
 
+import home.automation.CoffeeMaker;
+import home.automation.CoffeeMaker.Type;
+import home.automation.Switch;
 import home.automation.actions.AirConditionAction;
 import home.automation.actions.CoffeeMakerAction;
 import home.automation.actions.LightsAction;
@@ -9,7 +12,7 @@ import home.automation.actions.StereoAction;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class BigOldMasterSwitch {
+public class BigOldMasterSwitch implements ISwitch{
 
 	// Single Responsibility broken: Everything is in this class
 	
@@ -45,24 +48,28 @@ public class BigOldMasterSwitch {
 			// services end here
 			
 			isOn = true;
-			// Ascii art should be in a separate class - single responsibility
-			StringBuffer b = new StringBuffer();
-			b.append("         |\n");
-			b.append(" \\     _____     /\n");
-			b.append("     /       \\\n");
-			b.append("    (         )\n");
-			b.append("-   ( ))))))) )   -\n");
-			b.append("     \\ \\   / /\n");
-			b.append("      \\|___|/\n");
-			b.append("  /    |___|    \\\n");
-			b.append("       |___| prs\n");
-			b.append("       |___|\n");
-			System.out.println(b.toString());
+			printAsciiArt();
 		} else if (isOn) {
 			shutterAction.turnOn();
 			airConditioning.turnOff();
 			lightsAction.turnOff();
 			stereoAction.turnOff();
 			coffeeMakerAction.turnOff();		}
+	}
+
+	private void printAsciiArt() {
+		// Ascii art should be in a separate class - single responsibility
+		StringBuffer b = new StringBuffer();
+		b.append("         |\n");
+		b.append(" \\     _____     /\n");
+		b.append("     /       \\\n");
+		b.append("    (         )\n");
+		b.append("-   ( ))))))) )   -\n");
+		b.append("     \\ \\   / /\n");
+		b.append("      \\|___|/\n");
+		b.append("  /    |___|    \\\n");
+		b.append("       |___| prs\n");
+		b.append("       |___|\n");
+		System.out.println(b.toString());
 	}
 }

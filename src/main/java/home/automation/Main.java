@@ -1,5 +1,7 @@
 package home.automation;
 
+import home.automation.switches.BigOldMasterSwitch;
+
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
