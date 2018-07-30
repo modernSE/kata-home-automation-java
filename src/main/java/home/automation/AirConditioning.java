@@ -12,9 +12,8 @@ public class AirConditioning {
 		this.temperatureInCelsius = temperatureInCelsius;
 	}
 
+	// Has no functionality, name does not match implementation
 	public void turnOff() {
 		System.out.println("Turning off airconditioning.");
-
-
 	}
 }
