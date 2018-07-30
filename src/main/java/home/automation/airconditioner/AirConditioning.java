@@ -1,12 +1,11 @@
 package home.automation.airconditioner;
 
 import home.automation.Action;
-import home.automation.Device;
 
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class AirConditioning implements Device {
+public class AirConditioning {
 
 	private int temperatureInCelsius;
 
@@ -19,12 +18,4 @@ public class AirConditioning implements Device {
 		System.out.println("Turning off airconditioning.");
 
 	}
-
-	@Override
-	public void executeAction(Action action) {
-		action.perform();
-	}
-
-
-	
 }
