@@ -1,5 +1,9 @@
 package home.automation;
 
+import java.util.List;
+
+import home.automation.wrapper.DeviceWrapper;
+
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
@@ -7,47 +11,49 @@ public class BigOldMasterSwitch {
 
 	private boolean isOn = false;
 
-	private Shutter shutter = new Shutter();
+	private List<DeviceWrapper> devices;
 
-	private AirConditioning airConditioning = new AirConditioning();
-
-	private Lights lights = new Lights();
-
-	private Stereo stereo = new Stereo();
-
-	private CoffeeMaker coffeeMaker = new CoffeeMaker();
-
+	public BigOldMasterSwitch(List<DeviceWrapper> devices) {
+		this.devices = devices;
+	}
+	
+	// Single Responsibility verletzt
 	public void press() {
+	
 		if (!isOn) {
-			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
-			shutter.close();
-			airConditioning.setTemperatureInCelsius(20);
-			lights.dimPercent(50);
-			stereo.play("Bob Marley");
-			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
+			executeActions();
 			isOn = true;
-			StringBuffer b = new StringBuffer();
-			b.append("         |\n");
-			b.append(" \\     _____     /\n");
-			b.append("     /       \\\n");
-			b.append("    (         )\n");
-			b.append("-   ( ))))))) )   -\n");
-			b.append("     \\ \\   / /\n");
-			b.append("      \\|___|/\n");
-			b.append("  /    |___|    \\\n");
-			b.append("       |___| prs\n");
-			b.append("       |___|\n");
-			System.out.println(b.toString());
-		} else if (isOn) {
-			shutter.open();
-			airConditioning.turnOff();
-			lights.off();
-			stereo.rememberPosition();
-			stereo.off();
-			if (coffeeMaker.isOn()) {
-				coffeeMaker.doClean();
-				coffeeMaker.shutDown();
-			}
 		}
+		else {
+			shutDevicesDown();
+			isOn = false;
+		}
+	}
+
+	private void executeActions() {
+		// toDo change name
+		System.out.println("BIG OLD SWITCH PRESSED.\n\n");
+		devices.forEach(device -> device.startWithDefaultAction());
+	
+		printLightBulb();
+	}
+
+	private void shutDevicesDown() {
+		devices.forEach(device -> device.shutDown());
+	}
+	
+	private void printLightBulb() {
+		StringBuffer b = new StringBuffer();
+		b.append("         |\n");
+		b.append(" \\     _____     /\n");
+		b.append("     /       \\\n");
+		b.append("    (         )\n");
+		b.append("-   ( ))))))) )   -\n");
+		b.append("     \\ \\   / /\n");
+		b.append("      \\|___|/\n");
+		b.append("  /    |___|    \\\n");
+		b.append("       |___| prs\n");
+		b.append("       |___|\n");
+		System.out.println(b.toString());
 	}
 }

@@ -1,4 +1,4 @@
-package home.automation;
+package home.automation.coffeemaker;
 
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
