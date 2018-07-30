@@ -6,6 +6,4 @@ public interface AutomationAction {
 	
 	void turnOff();
 	
-	void toggle();
-
 }
