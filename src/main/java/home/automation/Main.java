@@ -16,32 +16,32 @@ public class Main {
 	}
 
 	private static void registerDevices(BigOldMasterSwitch s) {
-		var beforePrinter = new LegacySwitchAdapter<>(
+		var beforePrinter = new SwitchAdapter<>(
 			new NotificationOutputPrinter(),
 			p -> p.beforeOn(),
 			p -> p.beforeOff()
 		);
-		var shutter = new LegacySwitchAdapter<>(
+		var shutter = new SwitchAdapter<>(
 			new Shutter(), 
 			Shutter::close,
 			Shutter::open
 		);
-		var airConditioning = new LegacySwitchAdapter<>(
+		var airConditioning = new SwitchAdapter<>(
 			new AirConditioning(), 
 			ac -> ac.setTemperatureInCelsius(20), 
 			ac -> ac.turnOff()
 		);
-		var lights = new LegacySwitchAdapter<>(
+		var lights = new SwitchAdapter<>(
 			new Lights(), 
 			light -> light.dimPercent(50), 
 			light -> light.off()
 		);
-		var stereo = new LegacySwitchAdapter<>(
+		var stereo = new SwitchAdapter<>(
 			new Stereo(), 
 			s -> s.play("Bob Marley"), 
 			s -> {s.rememberPosition(); s.off();}
 		);
-		var coffeeMaker = new LegacySwitchAdapter<>(
+		var coffeeMaker = new SwitchAdapter<>(
 			new CoffeeMaker(),
 			cm -> cm.brew(CoffeeMaker.Type.DECAF),
 			cm -> {
@@ -51,7 +51,7 @@ public class Main {
 				}
 			}
 		);
-		var afterPrinter = new LegacySwitchAdapter<>(
+		var afterPrinter = new SwitchAdapter<>(
 			new NotificationOutputPrinter(),
 			printer -> printer.afterOn(),
 			printer -> printer.afterOff()
