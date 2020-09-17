@@ -13,9 +13,14 @@ public class Main {
 		masterSwitch.press();
 
 		masterSwitch.press();
+
+		var motionDetector = new BigOldMasterSwitch();
+		motionDetector.register(new StaircaseLights());
+		motionDetector.press();
+		motionDetector.press();
 	}
 
-	private static void registerDevices(BigOldMasterSwitch s) {
+	private static void registerDevices(BigOldMasterSwitch sw) {
 		var beforePrinter = new SwitchAdapter<>(
 			new NotificationOutputPrinter(),
 			p -> p.beforeOn(),
@@ -51,20 +56,26 @@ public class Main {
 				}
 			}
 		);
+		var outOfHomeVaacum = new SwitchAdapter<>(
+			new VacuumCleaner(), 
+		    VacuumCleaner::off,
+			VacuumCleaner::on
+		);
+
 		var afterPrinter = new SwitchAdapter<>(
 			new NotificationOutputPrinter(),
 			printer -> printer.afterOn(),
 			printer -> printer.afterOff()
 		);
 
-
-		s.register(beforePrinter);
-		s.register(shutter);
-		s.register(airConditioning);
-		s.register(lights);
-		s.register(stereo);
-		s.register(coffeeMaker);
-		s.register(afterPrinter);
+		sw.register(beforePrinter);
+		sw.register(shutter);
+		sw.register(airConditioning);
+		sw.register(lights);
+		sw.register(stereo);
+		sw.register(coffeeMaker);
+		sw.register(outOfHomeVaacum);
+		sw.register(afterPrinter);
 	}
 
 }

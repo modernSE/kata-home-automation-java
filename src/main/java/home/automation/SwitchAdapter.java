@@ -2,13 +2,11 @@ package home.automation;
 
 import java.util.function.Consumer;
 
-public class SwitchAdapter<T> implements ToggleSwitch {
+public class SwitchAdapter<T> extends Switch {
 
     private T legacySwitch;
     private Consumer<T> onAction;
     private Consumer<T> offAction;
-
-    private boolean onOffState = false;
 
     public SwitchAdapter(T legacySwitch, Consumer<T> onAction, Consumer<T> offAction) {
         this.legacySwitch = legacySwitch;
@@ -17,11 +15,12 @@ public class SwitchAdapter<T> implements ToggleSwitch {
     }
 
     @Override
-    public void toggle() {
-        if (onOffState)
-            offAction.accept(legacySwitch);
-        else
-            onAction.accept(legacySwitch);
-        onOffState = !onOffState;
+    public void on() {
+        onAction.accept(legacySwitch);
+    }
+
+    @Override
+    public void off() {
+        offAction.accept(legacySwitch);
     }
 }
