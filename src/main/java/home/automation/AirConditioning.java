@@ -13,7 +13,7 @@ public class AirConditioning {
 	}
 
 	public void turnOff() {
-		System.out.println("Turning off airconditioning.");
+		System.out.println("Turning off airconditioning. (Was " + this.temperatureInCelsius + ")");
 
 
 	}
