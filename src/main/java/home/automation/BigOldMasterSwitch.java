@@ -1,53 +1,22 @@
 package home.automation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class BigOldMasterSwitch {
+public class BigOldMasterSwitch extends Switch {
 
-	private boolean isOn = false;
-
-	private Shutter shutter = new Shutter();
-
-	private AirConditioning airConditioning = new AirConditioning();
-
-	private Lights lights = new Lights();
-
-	private Stereo stereo = new Stereo();
-
-	private CoffeeMaker coffeeMaker = new CoffeeMaker();
-
-	public void press() {
-		if (!isOn) {
-			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
-			shutter.close();
-			airConditioning.setTemperatureInCelsius(20);
-			lights.dimPercent(50);
-			stereo.play("Bob Marley");
-			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
-			isOn = true;
-			StringBuffer b = new StringBuffer();
-			b.append("         |\n");
-			b.append(" \\     _____     /\n");
-			b.append("     /       \\\n");
-			b.append("    (         )\n");
-			b.append("-   ( ))))))) )   -\n");
-			b.append("     \\ \\   / /\n");
-			b.append("      \\|___|/\n");
-			b.append("  /    |___|    \\\n");
-			b.append("       |___| prs\n");
-			b.append("       |___|\n");
-			System.out.println(b.toString());
-		} else if (isOn) {
-			shutter.open();
-			airConditioning.turnOff();
-			lights.off();
-			stereo.rememberPosition();
-			stereo.off();
-			if (coffeeMaker.isOn()) {
-				coffeeMaker.doClean();
-				coffeeMaker.shutDown();
-			}
-		}
-	}
+    public BigOldMasterSwitch(){
+        List<IDevice> devices = new ArrayList<>();
+        devices.add(new OldSwitchIntroMessage());
+        devices.add(new ShutterWrapper(new Shutter()));
+        devices.add(new AirConditioningWrapper(new AirConditioning()));
+        devices.add(new LightsWrapper(new Lights()));
+        devices.add(new StereoWrapper(new Stereo()));
+        devices.add(new CoffeeMakerWrapper(new CoffeeMaker()));
+        devices.add(new LightBulbPrinter());
+        plugIn(devices);
+    }
 }
