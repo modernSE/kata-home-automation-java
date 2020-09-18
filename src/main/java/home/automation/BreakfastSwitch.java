@@ -13,7 +13,7 @@ public class BreakfastSwitch implements Switch{
     private List<SwitchableComponent> registeredComponents = new ArrayList<>();
 
     public BreakfastSwitch() {
-        registeredComponents = List.of(new ShutterWrapper(true),
+        registeredComponents = List.of(new ShutterWrapper(),
             new CoffeeMakerWrapper(Type.ESPRESSO),
             new CoffeeMakerWrapper(Type.ESPRESSO));
     }

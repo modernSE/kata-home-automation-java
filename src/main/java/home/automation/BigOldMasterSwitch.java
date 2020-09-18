@@ -17,7 +17,7 @@ public class BigOldMasterSwitch implements Switch{
 
     public BigOldMasterSwitch() {
         registeredComponents = List.of(
-            new ShutterWrapper(), //
+            new ShutterWrapper(true), //
             new AirConditioningWrapper(20), //
             new LightsWrapper(50), //
             new StereoWrapper("Bob Marley"), //
