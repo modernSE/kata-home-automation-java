@@ -1,53 +1,62 @@
 package home.automation;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import home.automation.CoffeeMaker.Type;
+
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class BigOldMasterSwitch {
+public class BigOldMasterSwitch implements Switch{
 
-	private boolean isOn = false;
+    private boolean isOn = false;
+    
+    private List<SwitchableComponent> registeredComponents = new ArrayList<>();
 
-	private Shutter shutter = new Shutter();
+    public BigOldMasterSwitch() {
+        registeredComponents = List.of(
+            new ShutterWrapper(true), //
+            new AirConditioningWrapper(20), //
+            new LightsWrapper(50), //
+            new StereoWrapper("Bob Marley"), //
+            new CoffeeMakerWrapper(Type.DECAF));
+    }
 
-	private AirConditioning airConditioning = new AirConditioning();
+    @Override
+    public void registerComponents(SwitchableComponent... components) {
+        registeredComponents.addAll(Arrays.asList(components));
+    }
 
-	private Lights lights = new Lights();
-
-	private Stereo stereo = new Stereo();
-
-	private CoffeeMaker coffeeMaker = new CoffeeMaker();
-
+    @Override
 	public void press() {
 		if (!isOn) {
-			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
-			shutter.close();
-			airConditioning.setTemperatureInCelsius(20);
-			lights.dimPercent(50);
-			stereo.play("Bob Marley");
-			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
+            System.out.println("BIG OLD SWITCH PRESSED.\n\n");
+            for (SwitchableComponent switchableComponent : registeredComponents) {
+                switchableComponent.switchOn();
+            }			
 			isOn = true;
-			StringBuffer b = new StringBuffer();
-			b.append("         |\n");
-			b.append(" \\     _____     /\n");
-			b.append("     /       \\\n");
-			b.append("    (         )\n");
-			b.append("-   ( ))))))) )   -\n");
-			b.append("     \\ \\   / /\n");
-			b.append("      \\|___|/\n");
-			b.append("  /    |___|    \\\n");
-			b.append("       |___| prs\n");
-			b.append("       |___|\n");
-			System.out.println(b.toString());
+			printSwitchPressedStatus();
 		} else if (isOn) {
-			shutter.open();
-			airConditioning.turnOff();
-			lights.off();
-			stereo.rememberPosition();
-			stereo.off();
-			if (coffeeMaker.isOn()) {
-				coffeeMaker.doClean();
-				coffeeMaker.shutDown();
-			}
+			for (SwitchableComponent switchableComponent : registeredComponents) {
+                switchableComponent.switchOff();
+            }
 		}
 	}
+
+    private void printSwitchPressedStatus() {
+        StringBuffer b = new StringBuffer();
+        b.append("         |\n");
+        b.append(" \\     _____     /\n");
+        b.append("     /       \\\n");
+        b.append("    (         )\n");
+        b.append("-   ( ))))))) )   -\n");
+        b.append("     \\ \\   / /\n");
+        b.append("      \\|___|/\n");
+        b.append("  /    |___|    \\\n");
+        b.append("       |___| prs\n");
+        b.append("       |___|\n");
+        System.out.println(b.toString());
+    }
 }
