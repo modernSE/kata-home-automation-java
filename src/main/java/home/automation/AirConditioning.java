@@ -3,16 +3,22 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class AirConditioning {
+public class AirConditioning implements IDevice{
 
-	private int temperatureInCelsius;
+	private String value;
 
-	public void setTemperatureInCelsius(int temperatureInCelsius) {
-		System.out.println("Setting temperature to " + temperatureInCelsius);
-		this.temperatureInCelsius = temperatureInCelsius;
+	@Override
+	public void startDevice() {
+		System.out.println("Setting temperature to " + value);	
 	}
 
-	public void turnOff() {
-		System.out.println("Turning off airconditioning.");
+	@Override
+	public void stopDevice() {
+		System.out.println("Turning off airconditioning.");		
+	}
+
+	@Override
+	public void setValue(String value) {
+		this.value = value;
 	}
 }

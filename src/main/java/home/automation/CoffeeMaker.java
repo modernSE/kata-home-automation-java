@@ -3,9 +3,11 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class CoffeeMaker {
+public class CoffeeMaker implements IDevice {
 
 	private boolean on;
+
+	String value;
 
 	public void brew(Type type) {
 		if (!on) {
@@ -13,6 +15,9 @@ public class CoffeeMaker {
 			on = true;
 		}
 		System.out.println("BRRRRRRRRRRRRRRRRRRRRRRR SHHHHHHHHHHHHHHHHHHHHHHHHHHHH Drip Drip Drip...");
+
+		//missing cast from string to type!!
+
 		switch (type) {
 		case DECAF:
 			System.out.println("Using Decaf Beans.");
@@ -25,28 +30,41 @@ public class CoffeeMaker {
 		}
 	}
 
-	public boolean isOn() {
+	private boolean isOn() {
 		return on;
 	}
 
-	public void doClean() {
+	private void doClean() {
 		System.out.println("Running MasterClean3000(c) on CoffeeMaster3000");
 	}
 
-	/**
-	 * @deprecated starting from the next Update, Coffee Makers of the CoffeeMaster300x Series will no longer support the
-	 *             shutDown method. Please implement halt(int seconds) instead.
-	 */
-	public void shutDown() {
-		if (on) {
-			System.out.println("Shutting down CoffeeMaster3000");
-		}
-		on = false;
-		System.out.println("CoffeeMaster3000 standing by.");
-	}
 
 	public enum Type {
 		DECAF, ESPRESSO, LATTE
+	}
+
+	@Override
+	public void startDevice() {
+		// nothing todo
+		
+	}
+
+	@Override
+	public void stopDevice() {
+		if (on) {
+			doClean();
+			System.out.println("Shutting down CoffeeMaster3000");			
+			System.out.println("CoffeeMaster3000 standing by.");
+			on = false;
+		}		
+	}
+
+
+
+	@Override
+	public void setValue(String value) {
+		// Nothing to to
+		
 	}
 
 }

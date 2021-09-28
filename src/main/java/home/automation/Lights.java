@@ -3,17 +3,27 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class Lights {
+public class Lights implements IDevice{
 
-	/**
-	 * NOTE: starting from the next Software update, dimPercent will not work if the turnOn() method has not been called
-	 * before.
-	 **/
-	public void dimPercent(int i) {
-		System.out.println("Dimming to " + i + "%");
+	String value;
+
+	@Override
+	public void startDevice() {
+		System.out.println("Dimming to " + value + "%");	
+		
 	}
 
-	public void off() {
+	@Override
+	public void stopDevice() {
 		System.out.println("Lights will go out in 10 seconds.");
+	}
+
+	/**
+	 * NOTE: starting from the next Software update, dimPercent will not work if the startDevice() method has not been called
+	 * before.
+	 **/
+	@Override
+	public void setValue(String value) {
+		this.value = value; 			
 	}
 }
