@@ -5,39 +5,28 @@ package home.automation;
  */
 public class BigOldMasterSwitch {
 
+
+
+
 	private boolean isOn = false;
 
 	private Shutter shutter = new Shutter();
-
 	private AirConditioning airConditioning = new AirConditioning();
-
 	private Lights lights = new Lights();
-
 	private Stereo stereo = new Stereo();
-
 	private CoffeeMaker coffeeMaker = new CoffeeMaker();
 
 	public void press() {
-		if (!isOn) {
+		if (!isOn) {				
 			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
+			isOn = true;
+
 			shutter.close();
 			airConditioning.setTemperatureInCelsius(20);
 			lights.dimPercent(50);
-			stereo.play("Bob Marley");
+			stereo.play();
 			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
-			isOn = true;
-			StringBuffer b = new StringBuffer();
-			b.append("         |\n");
-			b.append(" \\     _____     /\n");
-			b.append("     /       \\\n");
-			b.append("    (         )\n");
-			b.append("-   ( ))))))) )   -\n");
-			b.append("     \\ \\   / /\n");
-			b.append("      \\|___|/\n");
-			b.append("  /    |___|    \\\n");
-			b.append("       |___| prs\n");
-			b.append("       |___|\n");
-			System.out.println(b.toString());
+			showLightBulb();
 		} else if (isOn) {
 			shutter.open();
 			airConditioning.turnOff();
@@ -50,4 +39,20 @@ public class BigOldMasterSwitch {
 			}
 		}
 	}
+
+	private void showLightBulb() {
+		StringBuffer b = new StringBuffer();
+			b.append("         |\n");
+			b.append(" \\     _____     /\n");
+			b.append("     /       \\\n");
+			b.append("    (         )\n");
+			b.append("-   ( ))))))) )   -\n");
+			b.append("     \\ \\   / /\n");
+			b.append("      \\|___|/\n");
+			b.append("  /    |___|    \\\n");
+			b.append("       |___| prs\n");
+			b.append("       |___|\n");
+			System.out.println(b.toString());
+	}
+
 }

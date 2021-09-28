@@ -7,12 +7,11 @@ package home.automation;
 /**
  * Starting from the next software update, it would be nice, if the source of music were selectable by the user.
  */
-public class Stereo {
+public class Stereo implements Device{
 
-	public void play(String s) {
+	public void play() {
 		System.out.println("Loading Spotify....");
 		System.out.println("Get up, stand up... Stand up for your rights!");
-
 	}
 
 	public void rememberPosition() {
