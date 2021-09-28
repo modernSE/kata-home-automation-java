@@ -3,7 +3,7 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class CoffeeMaker {
+public class CoffeeMaker implements Device {
 
 	private boolean on;
 
