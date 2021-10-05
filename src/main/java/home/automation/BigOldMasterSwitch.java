@@ -1,30 +1,29 @@
 package home.automation;
 
+import java.util.Map;
+
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class BigOldMasterSwitch {
+public class BigOldMasterSwitch extends Switch {
 
-	private boolean isOn = false;
+	// single resp.
+	// open-closed
+	// dependency inversion
 
-	private Shutter shutter = new Shutter();
+	public BigOldMasterSwitch(final Map<Class, Device> devices) {
+		super(devices);
+	}
 
-	private AirConditioning airConditioning = new AirConditioning();
-
-	private Lights lights = new Lights();
-
-	private Stereo stereo = new Stereo();
-
-	private CoffeeMaker coffeeMaker = new CoffeeMaker();
-
+	@Override
 	public void press() {
 		if (!isOn) {
 			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
-			shutter.close();
-			airConditioning.setTemperatureInCelsius(20);
-			lights.dimPercent(50);
-			stereo.play("Bob Marley");
-			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
+			get(Shutter.class).close();
+			get(AirConditioning.class).setTemperatureInCelsius(20);
+			get(Lights.class).dimPercent(50);
+			get(Stereo.class).play("Bob Marley");
+			get(CoffeeMaker.class).brew(CoffeeMaker.Type.DECAF);
 			isOn = true;
 			StringBuffer b = new StringBuffer();
 			b.append("         |\n");
@@ -39,14 +38,14 @@ public class BigOldMasterSwitch {
 			b.append("       |___|\n");
 			System.out.println(b.toString());
 		} else if (isOn) {
-			shutter.open();
-			airConditioning.turnOff();
-			lights.off();
-			stereo.rememberPosition();
-			stereo.off();
-			if (coffeeMaker.isOn()) {
-				coffeeMaker.doClean();
-				coffeeMaker.shutDown();
+			get(Shutter.class).open();
+			get(AirConditioning.class).turnOff();
+			get(Lights.class).off();
+			get(Stereo.class).rememberPosition();
+			get(Stereo.class).off();
+			if (get(CoffeeMaker.class).isOn()) {
+				get(CoffeeMaker.class).doClean();
+				get(CoffeeMaker.class).shutDown();
 			}
 		}
 	}

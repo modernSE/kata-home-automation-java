@@ -3,7 +3,7 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class AirConditioning {
+public class AirConditioning implements Device {
 
 	private int temperatureInCelsius;
 
