@@ -3,16 +3,17 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class AirConditioning {
+public class AirConditioning  extends AbstractHomeComponent implements Stoppable {
 
-	private int temperatureInCelsius;
+	private String temperatureInCelsius;
 
-	public void setTemperatureInCelsius(int temperatureInCelsius) {
-		System.out.println("Setting temperature to " + temperatureInCelsius);
+	@Override
+	public void changeState(String temperatureInCelsius) {
 		this.temperatureInCelsius = temperatureInCelsius;
+		System.out.println("Setting temperature to " + this.temperatureInCelsius);
 	}
 
-	public void turnOff() {
+	public void stop() {
 		System.out.println("Turning off airconditioning.");
 	}
 }

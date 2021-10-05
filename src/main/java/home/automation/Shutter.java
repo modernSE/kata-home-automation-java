@@ -3,14 +3,16 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class Shutter {
+public class Shutter extends AbstractHomeComponent implements Stoppable {
 
-	public void close() {
+	@Override
+	public void changeState(String i) {
 		System.out.println("Closing blinds.");
 
 	}
 
-	public void open() {
+	@Override
+	public void stop() {
 		System.out.println("Opening blinds. Avert your eyes.");
 	}
 }

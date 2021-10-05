@@ -3,17 +3,19 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class Lights {
+public class Lights extends AbstractHomeComponent implements Stoppable {
 
 	/**
 	 * NOTE: starting from the next Software update, dimPercent will not work if the turnOn() method has not been called
 	 * before.
 	 **/
-	public void dimPercent(int i) {
+	@Override
+	public void changeState(String i) {
 		System.out.println("Dimming to " + i + "%");
 	}
 
-	public void off() {
+	@Override
+	public void stop() {
 		System.out.println("Lights will go out in 10 seconds.");
 	}
 }

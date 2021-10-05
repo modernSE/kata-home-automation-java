@@ -3,33 +3,38 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class CoffeeMaker {
+public class CoffeeMaker extends AbstractHomeComponent implements Stoppable {
 
 	private boolean on;
 
-	public void brew(Type type) {
+	@Override
+	public void changeState(String type) {
 		if (!on) {
 			System.out.println("Turning on CoffeeMaster3000(c)");
 			on = true;
 		}
 		System.out.println("BRRRRRRRRRRRRRRRRRRRRRRR SHHHHHHHHHHHHHHHHHHHHHHHHHHHH Drip Drip Drip...");
 		switch (type) {
-		case DECAF:
+		case "DECAF":
 			System.out.println("Using Decaf Beans.");
 			break;
-		case LATTE:
+		case "LATTE":
 			System.out.println("Adding milk.");
 			break;
-		case ESPRESSO:
+		case "ESPRESSO":
 			System.out.println("That's it. No more than 3 drips for an espresso.");
 		}
 	}
 
-	public boolean isOn() {
-		return on;
+	@Override
+	public void stop() {
+		if (on) {
+			this.doClean();
+			this.shutDown();
+		}
 	}
 
-	public void doClean() {
+	private void doClean() {
 		System.out.println("Running MasterClean3000(c) on CoffeeMaster3000");
 	}
 
@@ -37,7 +42,7 @@ public class CoffeeMaker {
 	 * @deprecated starting from the next Update, Coffee Makers of the CoffeeMaster300x Series will no longer support the
 	 *             shutDown method. Please implement halt(int seconds) instead.
 	 */
-	public void shutDown() {
+	private void shutDown() {
 		if (on) {
 			System.out.println("Shutting down CoffeeMaster3000");
 		}

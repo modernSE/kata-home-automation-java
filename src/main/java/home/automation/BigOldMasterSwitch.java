@@ -17,6 +17,13 @@ public class BigOldMasterSwitch {
 
 	private CoffeeMaker coffeeMaker = new CoffeeMaker();
 
+	private List<AbstractHomeComponent> components;
+
+	public void press() {
+			for (AbstractHomeComponent comp : components) {
+				comp.toggle();
+			}
+	}
 	public void press() {
 		if (!isOn) {
 			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
