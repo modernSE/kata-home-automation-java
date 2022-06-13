@@ -6,7 +6,14 @@ package home.automation;
 public class Main {
 
 	public static void main(String[] args) {
-		BigOldMasterSwitch s = new BigOldMasterSwitch();
+
+		Shutter shutter = new Shutter();
+		AirConditioning airConditioning = new AirConditioning();
+		Lights lights = new Lights();
+		Stereo stereo = new Stereo();
+		CoffeeMaker coffeeMaker = new CoffeeMaker();
+		
+		BigOldMasterSwitch s = new BigOldMasterSwitch(shutter, airConditioning, lights, stereo, coffeeMaker);
 		s.press();
 
 		s.press();
