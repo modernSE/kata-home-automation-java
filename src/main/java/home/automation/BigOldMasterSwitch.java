@@ -7,15 +7,25 @@ public class BigOldMasterSwitch {
 
 	private boolean isOn = false;
 
-	private Shutter shutter = new Shutter();
+	private final Shutter shutter;
 
-	private AirConditioning airConditioning = new AirConditioning();
+	private final AirConditioning airConditioning;
 
-	private Lights lights = new Lights();
+	private final Lights lights;
 
-	private Stereo stereo = new Stereo();
+	private final Stereo stereo;
 
-	private CoffeeMaker coffeeMaker = new CoffeeMaker();
+	private final CoffeeMaker coffeeMaker;
+
+	public BigOldMasterSwitch(Shutter shutter, AirConditioning airConditioning, Lights lights, Stereo stereo, CoffeeMaker coffeeMaker) {
+
+		this.shutter = shutter;
+		this.airConditioning = airConditioning;
+		this.lights = lights;
+		this.stereo = stereo;
+		this.coffeeMaker = coffeeMaker;
+
+	}
 
 	public void press() {
 		if (!isOn) {
