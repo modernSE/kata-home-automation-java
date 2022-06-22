@@ -3,14 +3,24 @@ package home.automation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class Shutter {
+public class Shutter implements HomeAutomationElement{
 
-	public void close() {
+	private void close() {
 		System.out.println("Closing blinds.");
 
 	}
 
-	public void open() {
+	private void open() {
 		System.out.println("Opening blinds. Avert your eyes.");
+	}
+
+	@Override
+	public void startUp() {
+		close();
+	}
+
+	@Override
+	public void shutDown() {
+		open();
 	}
 }
