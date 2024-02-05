@@ -19,14 +19,37 @@ public class BigOldMasterSwitch {
 
 	public void press() {
 		if (!isOn) {
-			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
+			turnOn();
+		} else if (isOn) {
+			turnOff();
+		}
+	}
+
+	private void turnOff() {
+		shutter.open();
+			airConditioning.turnOff();
+			lights.off();
+			stereo.rememberPosition();
+			stereo.off();
+			if (coffeeMaker.isOn()) {
+				coffeeMaker.doClean();
+				coffeeMaker.shutDown();
+			}
+	}
+
+	private void turnOn() {
+		System.out.println("BIG OLD SWITCH PRESSED.\n\n");
 			shutter.close();
 			airConditioning.setTemperatureInCelsius(20);
 			lights.dimPercent(50);
 			stereo.play("Bob Marley");
 			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
 			isOn = true;
-			StringBuffer b = new StringBuffer();
+			printLamp();
+	}
+
+	private void printLamp() {
+		StringBuffer b = new StringBuffer();
 			b.append("         |\n");
 			b.append(" \\     _____     /\n");
 			b.append("     /       \\\n");
@@ -38,16 +61,5 @@ public class BigOldMasterSwitch {
 			b.append("       |___| prs\n");
 			b.append("       |___|\n");
 			System.out.println(b.toString());
-		} else if (isOn) {
-			shutter.open();
-			airConditioning.turnOff();
-			lights.off();
-			stereo.rememberPosition();
-			stereo.off();
-			if (coffeeMaker.isOn()) {
-				coffeeMaker.doClean();
-				coffeeMaker.shutDown();
-			}
-		}
 	}
 }
