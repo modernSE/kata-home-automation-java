@@ -4,11 +4,6 @@ import home.automation.CoffeeMaker;
 
 public class CoffeMakerHandler extends SmartObjectHandler {
 
-    public CoffeMakerHandler(int priority) {
-        super(priority);
-        //TODO Auto-generated constructor stub
-    }
-
     private CoffeeMaker coffeeMaker = new CoffeeMaker();
 
     @Override

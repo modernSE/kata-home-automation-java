@@ -2,7 +2,9 @@ package home.automation;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import home.automation.Handler.AirConditioningHandler;
 import home.automation.Handler.CoffeMakerHandler;
@@ -13,25 +15,35 @@ import home.automation.Handler.StereoHandler;
 
 public class SmartestHome {
     
-    List<SmartObjectHandler> handlers = new ArrayList<>();
+    Map<Integer, SmartObjectHandler> priorityHandlerMap = new HashMap<>();
+    Sensor lightSensor = new Sensor(3);
     public SmartestHome(){
-        var list = List.of(new ShutterHandler(1), new AirConditioningHandler(2), new LightsHandler(3),
-         new StereoHandler(4), new CoffeMakerHandler(5));
-        handlers.addAll(list);
-         Collections.sort(handlers, (h1, h2) ->{
-            return h1.getPriority() - h2.getPriority();
-         });
+        priorityHandlerMap.put(1, new ShutterHandler());
+        priorityHandlerMap.put(2, new AirConditioningHandler());
+        priorityHandlerMap.put(3, new LightsHandler());
+        priorityHandlerMap.put(4, new StereoHandler());
+        priorityHandlerMap.put(5, new CoffeMakerHandler());
+
+    }
+
+    public void turnSensor(){
+        lightSensor.toggle();
+        if(lightSensor.isActive()){
+            priorityHandlerMap.get(lightSensor.getObjectKey()).turnOn();
+        }else {
+            priorityHandlerMap.get(lightSensor.getObjectKey()).turnOff();
+        }
     }
 
     public void turnOnSmartHome() {
-        for(SmartObjectHandler handler: handlers){
-            handler.turnOn();
+        for(int i = 0; i < priorityHandlerMap.size(); i++){
+            priorityHandlerMap.get(i).turnOn();
         }
     }
 
     public void turnOffSmartHome() {
-        for(SmartObjectHandler handler: handlers){
-            handler.turnOff();
+        for(int i = 0; i < priorityHandlerMap.size(); i++){
+            priorityHandlerMap.get(i).turnOff();
         }
     }
 

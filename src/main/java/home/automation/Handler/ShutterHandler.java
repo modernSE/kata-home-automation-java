@@ -4,11 +4,6 @@ import home.automation.Shutter;
 
 public class ShutterHandler extends SmartObjectHandler{
 
-    public ShutterHandler(int priority) {
-        super(priority);
-        //TODO Auto-generated constructor stub
-    }
-
     private Shutter shutter = new Shutter();
 
     @Override

@@ -4,11 +4,6 @@ import home.automation.Stereo;
 
 public class StereoHandler extends SmartObjectHandler {
 
-    public StereoHandler(int priority) {
-        super(priority);
-        //TODO Auto-generated constructor stub
-    }
-
     private Stereo stereo = new Stereo();
 
     @Override
