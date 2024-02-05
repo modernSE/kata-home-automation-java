@@ -37,7 +37,7 @@ public class SmartestHome {
 
     public void turnOnSmartHome() {
         for(int i = 0; i < priorityHandlerMap.size(); i++){
-            priorityHandlerMap.get(i).turnOn();
+            priorityHandlerMap.get(i+1).turnOn();
         }
     }
 
