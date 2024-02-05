@@ -43,7 +43,7 @@ public class SmartestHome {
 
     public void turnOffSmartHome() {
         for(int i = 0; i < priorityHandlerMap.size(); i++){
-            priorityHandlerMap.get(i).turnOff();
+            priorityHandlerMap.get(i+1).turnOff();
         }
     }
 
