@@ -1,9 +1,11 @@
-package home.automation;
+package home.automation.devices;
+
+import home.automation.interfaces.SmartHomeDevice;
 
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class AirConditioning {
+public class AirConditioning implements SmartHomeDevice {
 
 	private int temperatureInCelsius;
 
@@ -12,7 +14,13 @@ public class AirConditioning {
 		this.temperatureInCelsius = temperatureInCelsius;
 	}
 
+	@Override
 	public void turnOff() {
 		System.out.println("Turning off airconditioning.");
+	}
+
+	@Override
+	public void setDefaultScene() {
+		setTemperatureInCelsius(20);
 	}
 }

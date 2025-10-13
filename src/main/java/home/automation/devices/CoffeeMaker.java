@@ -1,9 +1,11 @@
-package home.automation;
+package home.automation.devices;
+
+import home.automation.interfaces.SmartHomeDevice;
 
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class CoffeeMaker {
+public class CoffeeMaker implements SmartHomeDevice {
 
 	private boolean on;
 
@@ -43,6 +45,21 @@ public class CoffeeMaker {
 		}
 		on = false;
 		System.out.println("CoffeeMaster3000 standing by.");
+	}
+
+	public void halt(int seconds) {
+		shutDown();
+	}
+
+	@Override
+	public void turnOff() {
+		doClean();
+		shutDown();
+	}
+
+	@Override
+	public void setDefaultScene() {
+		brew(CoffeeMaker.Type.DECAF);
 	}
 
 	public enum Type {
