@@ -1,5 +1,10 @@
 package home.automation;
 
+import java.util.List;
+
+import home.automation.*;
+import home.automation.operations.ConditionalOperation;
+import home.automation.operations.PrintingOperation;
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
@@ -17,37 +22,39 @@ public class BigOldMasterSwitch {
 
 	private CoffeeMaker coffeeMaker = new CoffeeMaker();
 
-	public void press() {
-		if (!isOn) {
-			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
-			shutter.close();
-			airConditioning.setTemperatureInCelsius(20);
-			lights.dimPercent(50);
-			stereo.play("Bob Marley");
-			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
-			isOn = true;
-			StringBuffer b = new StringBuffer();
-			b.append("         |\n");
-			b.append(" \\     _____     /\n");
-			b.append("     /       \\\n");
-			b.append("    (         )\n");
-			b.append("-   ( ))))))) )   -\n");
-			b.append("     \\ \\   / /\n");
-			b.append("      \\|___|/\n");
-			b.append("  /    |___|    \\\n");
-			b.append("       |___| prs\n");
-			b.append("       |___|\n");
-			System.out.println(b.toString());
-		} else if (isOn) {
-			shutter.open();
-			airConditioning.turnOff();
-			lights.off();
-			stereo.rememberPosition();
-			stereo.off();
-			if (coffeeMaker.isOn()) {
+	private Switch s = new Switch(List.of(
+		new PrintingOperation("BIG OLD SWITCH PRESSED.\n\n"),
+			() -> shutter.close(),
+			() -> airConditioning.setTemperatureInCelsius(20),
+			() -> lights.dimPercent(50),
+			() -> stereo.play("Bob Marley"),
+			() -> coffeeMaker.brew(CoffeeMaker.Type.DECAF),
+			new PrintingOperation(new StringBuilder()
+				.append("         |\n")
+				.append(" \\     _____     /\n")
+				.append("     /       \\\n")
+				.append("    (         )\n")
+				.append("-   ( ))))))) )   -\n")
+				.append("     \\ \\   / /\n")
+				.append("      \\|___|/\n")
+				.append("  /    |___|    \\\n")
+				.append("       |___| prs\n")
+				.append("       |___|\n")
+				.toString())),
+		List.of(
+			() -> shutter.open(),
+			() -> airConditioning.turnOff(),
+			() -> lights.off(),
+			() -> stereo.rememberPosition(),
+			() -> stereo.off(),
+			new ConditionalOperation(() -> coffeeMaker.isOn(), ()-> {
 				coffeeMaker.doClean();
 				coffeeMaker.shutDown();
-			}
-		}
+			})
+		)
+	);
+
+	public void press() {
+		s.press();
 	}
 }
