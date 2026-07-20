@@ -1,53 +1,44 @@
 package home.automation;
 
+import java.util.List;
+
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class BigOldMasterSwitch {
+public class BigOldMasterSwitch implements Switch {
 
-	private boolean isOn = false;
+	private boolean isOn;
 
-	private Shutter shutter = new Shutter();
+	List<Component> devices;
 
-	private AirConditioning airConditioning = new AirConditioning();
-
-	private Lights lights = new Lights();
-
-	private Stereo stereo = new Stereo();
-
-	private CoffeeMaker coffeeMaker = new CoffeeMaker();
+	public BigOldMasterSwitch(boolean isOn, List<Component> devices) {
+		this.isOn = isOn;
+		this.devices = devices;
+	}
 
 	public void press() {
 		if (!isOn) {
 			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
-			shutter.close();
-			airConditioning.setTemperatureInCelsius(20);
-			lights.dimPercent(50);
-			stereo.play("Bob Marley");
-			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
+			devices.forEach(device -> device.whenOff());
 			isOn = true;
-			StringBuffer b = new StringBuffer();
-			b.append("         |\n");
-			b.append(" \\     _____     /\n");
-			b.append("     /       \\\n");
-			b.append("    (         )\n");
-			b.append("-   ( ))))))) )   -\n");
-			b.append("     \\ \\   / /\n");
-			b.append("      \\|___|/\n");
-			b.append("  /    |___|    \\\n");
-			b.append("       |___| prs\n");
-			b.append("       |___|\n");
-			System.out.println(b.toString());
+			System.out.println(getLightBulb());
 		} else if (isOn) {
-			shutter.open();
-			airConditioning.turnOff();
-			lights.off();
-			stereo.rememberPosition();
-			stereo.off();
-			if (coffeeMaker.isOn()) {
-				coffeeMaker.doClean();
-				coffeeMaker.shutDown();
-			}
+			devices.forEach(device -> device.whenOn());
 		}
+	}
+
+	private String getLightBulb() {
+		StringBuffer b = new StringBuffer();
+		b.append("         |\n");
+		b.append(" \\     _____     /\n");
+		b.append("     /       \\\n");
+		b.append("    (         )\n");
+		b.append("-   ( ))))))) )   -\n");
+		b.append("     \\ \\   / /\n");
+		b.append("      \\|___|/\n");
+		b.append("  /    |___|    \\\n");
+		b.append("       |___| prs\n");
+		b.append("       |___|\n");
+		return b.toString();
 	}
 }
