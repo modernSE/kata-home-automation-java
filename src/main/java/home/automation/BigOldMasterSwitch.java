@@ -1,9 +1,19 @@
 package home.automation;
 
+import java.util.List;
+
+import home.InversionDecorator;
+import home.automation.device_adapters.AirConditioningAdapter;
+import home.automation.device_adapters.CoffeeMakerAdapter;
+import home.automation.device_adapters.DeviceAdapter;
+import home.automation.device_adapters.LightsAdapter;
+import home.automation.device_adapters.ShutterAdapter;
+import home.automation.device_adapters.StereoAdapter;
+
 /**
  * Created by Ferdinand.Szekeresch on 20.04.2017.
  */
-public class BigOldMasterSwitch {
+public class BigOldMasterSwitch extends Switch {
 
 	private boolean isOn = false;
 
@@ -17,37 +27,14 @@ public class BigOldMasterSwitch {
 
 	private CoffeeMaker coffeeMaker = new CoffeeMaker();
 
-	public void press() {
-		if (!isOn) {
-			System.out.println("BIG OLD SWITCH PRESSED.\n\n");
-			shutter.close();
-			airConditioning.setTemperatureInCelsius(20);
-			lights.dimPercent(50);
-			stereo.play("Bob Marley");
-			coffeeMaker.brew(CoffeeMaker.Type.DECAF);
-			isOn = true;
-			StringBuffer b = new StringBuffer();
-			b.append("         |\n");
-			b.append(" \\     _____     /\n");
-			b.append("     /       \\\n");
-			b.append("    (         )\n");
-			b.append("-   ( ))))))) )   -\n");
-			b.append("     \\ \\   / /\n");
-			b.append("      \\|___|/\n");
-			b.append("  /    |___|    \\\n");
-			b.append("       |___| prs\n");
-			b.append("       |___|\n");
-			System.out.println(b.toString());
-		} else if (isOn) {
-			shutter.open();
-			airConditioning.turnOff();
-			lights.off();
-			stereo.rememberPosition();
-			stereo.off();
-			if (coffeeMaker.isOn()) {
-				coffeeMaker.doClean();
-				coffeeMaker.shutDown();
-			}
-		}
+	public BigOldMasterSwitch() {
+		List<DeviceAdapter> devices = List.of(
+				new InversionDecorator(new ShutterAdapter()),
+				new AirConditioningAdapter(20),
+				new LightsAdapter(50),
+				new StereoAdapter("Bob Marley"),
+				new CoffeeMakerAdapter(CoffeeMaker.Type.DECAF)
+			);
+		super(devices);
 	}
 }
